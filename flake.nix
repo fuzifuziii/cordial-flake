@@ -18,7 +18,7 @@
       cargoToml = builtins.fromTOML (builtins.readFile "${cordial-src}/Cargo.toml");
 
       version = "${cargoToml.workspace.package.version}-${cordial-src.shortRev or "dirty"}";
-
+  
       runtimeLibs = with pkgs; [
         vulkan-loader
         libGL
@@ -47,7 +47,8 @@
           makeWrapper
           rustPlatform.bindgenHook
         ];
-        buildInputs = runtimeLibs ++ [ pkgs.zlib ];
+
+        buildInputs = runtimeLibs ++ [ pkgs.zlib pkgs.glib ]; 
 
         doCheck = false;
 
