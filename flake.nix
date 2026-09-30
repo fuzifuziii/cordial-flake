@@ -15,6 +15,7 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       lib = pkgs.lib;
+      cargoToml = builtins.fromTOML (builtins.readFile "${cordial-src}/Cargo.toml");
 
       version = "${cargoToml.workspace.package.version}-${cordial-src.shortRev or "dirty"}";
 
@@ -57,7 +58,7 @@
         '';
 
         meta = {
-          description = "Roblox на Linux через официальный Android x86-64 движок";
+          description = "Roblox for Linux";
           homepage = "https://github.com/luohoa97/cordial";
           license = lib.licenses.gpl3Plus;
           platforms = [ system ];
