@@ -46,16 +46,39 @@
           cmake
           makeWrapper
           rustPlatform.bindgenHook
+          copyDesktopItems
         ];
 
         buildInputs = runtimeLibs ++ [ pkgs.zlib pkgs.glib pkgs.cairo pkgs.pango pkgs.gdk-pixbuf pkgs.gtk4 pkgs.libadwaita ]; 
 
         doCheck = false;
 
+        desktopItems = [
+          (pkgs.makeDesktopItem {
+            name = "cordial";
+            exec = "cordial-load";
+            icon = "cordial";
+            comment = "Roblox Client (Android x86-64 runtime)";
+            desktopName = "Cordial";
+            genericName = "Roblox for Linux";
+            categories = [ "Game" ];
+          })
+        ];
+
         postInstall = ''
           for f in $out/bin/*; do
             wrapProgram "$f" --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath runtimeLibs}
           done
+
+          mkdir -p $out/share/icons/hicolor/scalable/apps
+          
+          if [ -f $src/assets/cordial.svg ]; then
+            cp $src/assets/cordial.svg $out/share/icons/hicolor/scalable/apps/cordial.svg
+          elif [ -f $src/resources/cordial.svg ]; then
+            cp $src/resources/cordial.svg $out/share/icons/hicolor/scalable/apps/cordial.svg
+          else
+            find $src -name "*cordial*.svg" -exec cp {} $out/share/icons/hicolor/scalable/apps/cordial.svg \; -quit
+          fi
         '';
 
         meta = {
