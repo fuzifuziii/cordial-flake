@@ -25,10 +25,10 @@
         libxkbcommon
         wayland
         alsa-lib
-        xorg.libX11
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXrandr
+        libx11
+        libxcursor
+        libxi
+        libxrandr
       ];
 
       cordial = (pkgs.rustPlatform.buildRustPackage.override { stdenv = pkgs.clangStdenv; }) {
