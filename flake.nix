@@ -48,7 +48,7 @@
           rustPlatform.bindgenHook
         ];
 
-        buildInputs = runtimeLibs ++ [ pkgs.zlib pkgs.glib ]; 
+        buildInputs = runtimeLibs ++ [ pkgs.zlib pkgs.glib pkgs.cairo pkgs.pango pkgs.gdk-pixbuf pkgs.gtk3 ]; 
 
         doCheck = false;
 
